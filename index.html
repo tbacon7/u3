@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>Ultima III</title>
+    <!-- What a shared link shows: the description, and the box's demon with the title (public/share.jpg, made by
+         tools/key-art.mjs). The page's address is GitHub Pages' (pages.yml). -->
+    <meta
+      name="description"
+      content="Ultima III: Exodus, a modernized port of the 1983 game: historic and modern play, for the browser, Windows, macOS, Linux, Android and the Steam Deck."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ultima III" />
+    <meta property="og:title" content="Ultima III: Exodus" />
+    <meta
+      property="og:description"
+      content="The 1983 RPG, modernized: play it as it was in any of its period looks or in a modern one, with a controller, keyboard or touch, in the browser or as an app."
+    />
+    <meta property="og:url" content="https://synthwave-pixel.github.io/ultima3/" />
+    <meta property="og:image" content="https://synthwave-pixel.github.io/ultima3/share.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="EXODUS: Ultima III, 1983 to 2026, beside the demon from Denis Loubet's box painting" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="icon" href="pwa-192.png" type="image/png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #000;
+        /* No double-tap or pinch zoom: quick taps on the virtual controller must stay taps. */
+        touch-action: manipulation;
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        /* The canvas fills the window, keeping its shape: centred in a
+           landscape window, at the top of a portrait one. */
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      /* Strictly taller than wide: a square window counts as landscape. */
+      @media (aspect-ratio < 1 / 1) {
+        body {
+          align-items: flex-start;
+        }
+      }
+      /* The canvas and the boot screen stacked in one cell, the canvas giving its size. Not positioned: the scanlines
+         overlay, placed next to the canvas, is laid out from the page's corner. */
+      #stage {
+        display: grid;
+      }
+      #stage > canvas,
+      #boot {
+        grid-area: 1 / 1;
+      }
+      /* The boot screen (tools/key-art.mjs), over the canvas until the game draws: smooth, a painting; of no size of
+         its own, so the canvas alone sizes the cell. */
+      #boot {
+        width: 100%;
+        height: 100%;
+        contain: size;
+        pointer-events: none;
+      }
+      canvas {
+        /* Pixel art: never smooth when the browser scales the canvas. */
+        image-rendering: pixelated;
+        /* 40 by 24 cells of square pixels (5:3): as wide as the window, or
+           as wide as its height allows, whichever is less; the height
+           follows, so nothing stretches. */
+        width: min(100vw, calc(100vh * 40 / 24));
+        width: min(100dvw, calc(100dvh * 40 / 24));
+        aspect-ratio: 40 / 24;
+        outline: none;
+        display: block;
+        touch-action: none;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/main-B3CGBhOg.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/help-B0HcgB5Q.js">
+  <link rel="manifest" href="/manifest.webmanifest"></head>
+  <body>
+    <!-- The game draws everything, error text included, on this canvas; the box's demon covers it while it loads. -->
+    <div id="stage">
+      <canvas id="screen" width="1280" height="768" tabindex="0"></canvas>
+      <img id="boot" src="boot.jpg" alt="Ultima III is loading" />
+    </div>
+  </body>
+</html>
